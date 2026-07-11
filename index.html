@@ -12,80 +12,52 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: sans-serif;
             background-color: #fff0f5;
             text-align: center;
             padding: 20px;
-            overflow: hidden;
         }
-        h1 { color: #d63384; margin-bottom: 20px; }
-        
-        .photo-container { position: relative; width: 320px; height: 320px; margin-bottom: 30px; }
+        .photo-container { 
+            position: relative; 
+            width: 300px; 
+            height: 300px; 
+            margin-bottom: 20px; 
+            background-color: #eee; /* Shows grey box if image is missing */
+            border-radius: 15px;
+        }
         .slide {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 100%; height: 100%; object-fit: cover; border-radius: 15px;
             position: absolute; top: 0; left: 0;
-            opacity: 0; transition: opacity 1s ease-in-out;
+            opacity: 0; transition: opacity 1s;
         }
         .slide.active { opacity: 1; }
-
-        .buttons { margin-top: 30px; position: relative; width: 100%; height: 100px; }
-        button {
-            padding: 15px 35px; font-size: 20px; margin: 10px;
-            cursor: pointer; border: none; border-radius: 30px; font-weight: bold;
-            position: absolute;
-        }
-        #yesBtn { background-color: #ff4d6d; color: white; left: calc(50% - 120px); }
-        #noBtn { background-color: #888; color: white; left: calc(50% + 20px); }
-        
-        #message { display: none; font-size: 32px; color: #d63384; font-weight: bold; }
+        button { padding: 10px 25px; margin: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="container">
-        <!-- These 5 images must be in the same folder as index.html -->
-        <div class="photo-container" id="slideshow">
-            <img src="photo1.jpg" class="slide active">
-            <img src="photo2.jpg" class="slide">
-            <img src="photo3.jpg" class="slide">
-            <img src="photo4.jpg" class="slide">
-            <img src="photo5.jpg" class="slide">
+        <div class="photo-container">
+            <!-- Ensure filenames match EXACTLY what you see in GitHub -->
+            <img src="photo1.jpg" class="slide active" onerror="this.style.display='none'">
+            <img src="photo2.jpg" class="slide" onerror="this.style.display='none'">
+            <img src="photo3.jpg" class="slide" onerror="this.style.display='none'">
+            <img src="photo4.jpg" class="slide" onerror="this.style.display='none'">
+            <img src="photo5.jpg" class="slide" onerror="this.style.display='none'">
         </div>
         
-        <h1>Hey Mai Juju, would you like to go on a movie date with me this Tuesday or Thursday?</h1>
-        <div class="buttons">
-            <button id="yesBtn" onclick="accept()">Yes!</button>
-            <button id="noBtn" onmouseover="moveButton()">No</button>
-        </div>
-    </div>
-
-    <div id="message" class="animate__animated animate__heartBeat">
-        Yay! I am so happy, Mai Juju! ❤️ <br> See you then!
+        <h1>Hey Mai Juju, date this Tuesday or Thursday?</h1>
+        <button onclick="alert('Yay!')">Yes!</button>
     </div>
 
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        
         setInterval(() => {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }, 3000);
-
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 150);
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
-
-        function accept() {
-            document.getElementById('container').style.display = 'none';
-            document.getElementById('message').style.display = 'block';
-        }
     </script>
 </body>
 </html>
