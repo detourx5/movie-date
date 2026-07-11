@@ -6,51 +6,44 @@
     <title>For my Mai Juju</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: sans-serif;
-            background-color: #fff0f5;
-            text-align: center;
-            padding: 20px;
-        }
-        .photo-container { 
-            position: relative; 
-            width: 300px; 
-            height: 300px; 
-            margin-bottom: 20px; 
-            background-color: #eee; /* Shows grey box if image is missing */
-            border-radius: 15px;
-        }
-        .slide {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 15px;
-            position: absolute; top: 0; left: 0;
-            opacity: 0; transition: opacity 1s;
-        }
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; }
+        
+        .photo-container { position: relative; width: 300px; height: 300px; margin-bottom: 20px; }
+        .slide { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
-        button { padding: 10px 25px; margin: 10px; cursor: pointer; }
+
+        .buttons { margin-top: 30px; }
+        button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #888; color: white; position: absolute; }
+        
+        #message { display: none; font-size: 28px; color: #d63384; font-weight: bold; padding: 20px; }
     </style>
 </head>
 <body>
 
     <div id="container">
         <div class="photo-container">
-            <!-- Ensure filenames match EXACTLY what you see in GitHub -->
-            <img src="photo1.jpg" class="slide active" onerror="this.style.display='none'">
-            <img src="photo2.jpg" class="slide" onerror="this.style.display='none'">
-            <img src="photo3.jpg" class="slide" onerror="this.style.display='none'">
-            <img src="photo4.jpg" class="slide" onerror="this.style.display='none'">
-            <img src="photo5.jpg" class="slide" onerror="this.style.display='none'">
+            <img src="photo1.jpg" class="slide active">
+            <img src="photo2.jpg" class="slide">
+            <img src="photo3.jpg" class="slide">
+            <img src="photo4.jpg" class="slide">
+            <img src="photo5.jpg" class="slide">
         </div>
         
-        <h1>Hey Mai Juju, date this Tuesday or Thursday?</h1>
-        <button onclick="alert('Yay!')">Yes!</button>
+        <h1>Hey Mai Juju, would you like to go on a movie date with me this Tuesday or Thursday?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="accept()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="message" class="animate__animated animate__fadeIn">
+        Ndokuda nemoyo wese mangwana waMhofu ❤️
     </div>
 
     <script>
+        // Slideshow: All images load and cycle
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         setInterval(() => {
@@ -58,6 +51,17 @@
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }, 3000);
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+        }
+
+        function accept() {
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+        }
     </script>
 </body>
 </html>
