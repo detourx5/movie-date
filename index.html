@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For my Mai Juju</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff0f5;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        h1 { color: #d63384; margin-bottom: 20px; }
+        
+        .photo-container { position: relative; width: 320px; height: 320px; margin-bottom: 30px; }
+        .slide {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: absolute; top: 0; left: 0;
+            opacity: 0; transition: opacity 1s ease-in-out;
+        }
+        .slide.active { opacity: 1; }
+
+        .buttons { margin-top: 30px; position: relative; width: 100%; height: 100px; }
+        button {
+            padding: 15px 35px; font-size: 20px; margin: 10px;
+            cursor: pointer; border: none; border-radius: 30px; font-weight: bold;
+            position: absolute;
+        }
+        #yesBtn { background-color: #ff4d6d; color: white; left: calc(50% - 120px); }
+        #noBtn { background-color: #888; color: white; left: calc(50% + 20px); }
+        
+        #message { display: none; font-size: 32px; color: #d63384; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <!-- These 5 images must be in the same folder as index.html -->
+        <div class="photo-container" id="slideshow">
+            <img src="photo1.jpg" class="slide active">
+            <img src="photo2.jpg" class="slide">
+            <img src="photo3.jpg" class="slide">
+            <img src="photo4.jpg" class="slide">
+            <img src="photo5.jpg" class="slide">
+        </div>
+        
+        <h1>Hey Mai Juju, would you like to go on a movie date with me this Tuesday or Thursday?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="accept()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="message" class="animate__animated animate__heartBeat">
+        Yay! I am so happy, Mai Juju! ❤️ <br> See you then!
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 3000);
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function accept() {
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
