@@ -6,18 +6,27 @@
     <title>For my Mai Juju</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; }
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
         
-        .photo-container { position: relative; width: 300px; height: 300px; margin-bottom: 20px; }
-        .slide { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+        /* Heart shape container */
+        .photo-container { 
+            position: relative; 
+            width: 300px; 
+            height: 300px; 
+            margin-bottom: 20px; 
+            clip-path: path('M150 270 C 150 270 20 180 20 100 C 20 40 70 20 100 20 C 130 20 150 50 150 50 C 150 50 170 20 200 20 C 230 20 280 40 280 100 C 280 180 150 270 150 270 Z');
+            background-color: #ffcad4;
+        }
+        
+        .slide { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
         .slide.active { opacity: 1; }
 
-        .buttons { margin-top: 30px; }
-        button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; }
-        #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #888; color: white; position: absolute; }
+        .buttons { margin-top: 30px; position: relative; width: 200px; height: 100px; }
+        button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; position: absolute; transition: all 0.3s ease; }
+        #yesBtn { background-color: #ff4d6d; color: white; left: 0; }
+        #noBtn { background-color: #888; color: white; right: 0; }
         
-        #message { display: none; font-size: 28px; color: #d63384; font-weight: bold; padding: 20px; }
+        #message { display: none; font-size: 32px; color: #d63384; font-weight: bold; padding: 20px; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -38,12 +47,12 @@
         </div>
     </div>
 
-    <div id="message" class="animate__animated animate__fadeIn">
+    <div id="message" class="animate__animated animate__zoomIn">
         Ndokuda nemoyo wese mangwana waMhofu ❤️
     </div>
 
     <script>
-        // Slideshow: All images load and cycle
+        // Slideshow logic
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         setInterval(() => {
@@ -52,12 +61,15 @@
             slides[currentSlide].classList.add('active');
         }, 3000);
 
+        // Moving "No" button
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 150) + 'px';
         }
 
+        // Show romantic message
         function accept() {
             document.getElementById('container').style.display = 'none';
             document.getElementById('message').style.display = 'block';
