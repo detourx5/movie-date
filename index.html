@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For my Mai Juju</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -21,9 +22,9 @@
         .p4 img { top: -150px; left: -150px; }
 
         .buttons { margin-top: 20px; display: flex; gap: 20px; justify-content: center; align-items: center; height: 60px; }
-        button { padding: 10px 25px; font-size: 16px; cursor: pointer; border: none; border-radius: 20px; font-weight: bold; transition: none; }
+        button { padding: 10px 25px; font-size: 16px; cursor: pointer; border: none; border-radius: 20px; font-weight: bold; }
         #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #888; color: white; position: absolute; }
+        #noBtn { background-color: #888; color: white; position: fixed; }
         
         #final-screen { display: none; padding: 20px; position: relative; z-index: 10; }
         .verse { margin-top: 30px; font-style: italic; color: #555; font-size: 1.1em; }
@@ -50,7 +51,7 @@
         <h1>Hey Mai Juju, movie date this Tuesday or Thursday?</h1>
         <div class="buttons">
             <button id="yesBtn" onclick="showFinal()">Yes!</button>
-            <button id="noBtn" onmouseover="moveNo()">No</button>
+            <button id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No</button>
         </div>
     </div>
 
@@ -62,13 +63,11 @@
     </div>
 
     <script>
-        // Timer calculation
         const start = new Date("2022-06-15");
         const today = new Date();
         const diffDays = Math.ceil(Math.abs(today - start) / (1000 * 60 * 60 * 24));
         document.getElementById("timer").innerText = diffDays + " days together and counting!";
 
-        // Puzzle slideshow
         let current = 1;
         setInterval(() => {
             document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
@@ -76,14 +75,14 @@
             document.querySelectorAll(`.img${current}`).forEach(el => el.classList.add('active'));
         }, 3000);
 
-        // Fast moving No button
         function moveNo() {
             const btn = document.getElementById('noBtn');
-            btn.style.left = Math.random() * (window.innerWidth - 80) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        // Final screen
         function showFinal() {
             document.getElementById('container').style.display = 'none';
             document.getElementById('final-screen').style.display = 'block';
