@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <title>For my Mai Juju</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
+        /* Soft Romantic Pink Background */
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #ffe4e9; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
         
-        /* Puzzle Grid Container */
         .puzzle-grid { 
             display: grid; grid-template-columns: 150px 150px; grid-template-rows: 150px 150px; 
-            gap: 2px; margin-bottom: 20px; border: 5px solid #d63384; border-radius: 15px;
+            width: 300px; height: 300px; margin-bottom: 10px; border: 5px solid #d63384; border-radius: 15px; overflow: hidden;
         }
         .piece { width: 150px; height: 150px; overflow: hidden; position: relative; background: #ffcad4; }
         .piece img { width: 300px; height: 300px; object-fit: cover; position: absolute; opacity: 0; transition: opacity 1s; }
@@ -22,18 +21,24 @@
         .p3 img { top: -150px; left: 0; }
         .p4 img { top: -150px; left: -150px; }
 
-        .buttons { margin-top: 30px; position: relative; width: 300px; height: 100px; }
+        .buttons { margin-top: 20px; position: relative; width: 300px; height: 100px; }
         button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; position: absolute; transition: all 0.2s ease; }
         #yesBtn { background-color: #ff4d6d; color: white; left: 20px; }
         #noBtn { background-color: #888; color: white; right: 20px; }
         
-        #final-screen { display: none; padding: 20px; }
-        .verse { margin-top: 50px; font-style: italic; color: #555; font-size: 1.1em; }
+        #final-screen { display: none; padding: 20px; position: relative; }
+        .verse { margin-top: 30px; font-style: italic; color: #555; font-size: 1.1em; }
+        #timer { font-size: 1.2em; color: #d63384; font-weight: bold; margin-bottom: 10px; }
+
+        /* Heart animation */
+        .heart { position: absolute; top: -10%; color: #d63384; font-size: 24px; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh); } }
     </style>
 </head>
 <body>
 
     <div id="container">
+        <div id="timer"></div>
         <div class="puzzle-grid">
             <div class="piece p1"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
             <div class="piece p2"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
@@ -49,20 +54,24 @@
     </div>
 
     <div id="final-screen" class="animate__animated animate__zoomIn">
-        <h2 style="color: #d63384;">Ndokuda nemoyo wese mukadzi wamhofu ❤️</h2>
+        <h2 style="color: #d63384;">Ndokuda nemoyo wese mangwenya ❤️</h2>
         <div class="verse">
             <p>"Many women do noble things, but you surpass them all." – Proverbs 31:29</p>
         </div>
     </div>
 
     <script>
+        const start = new Date("2022-06-15");
+        const today = new Date();
+        const diffDays = Math.ceil(Math.abs(today - start) / (1000 * 60 * 60 * 24));
+        document.getElementById("timer").innerText = diffDays + " days together and counting!";
+
         let current = 1;
-        function cycle() {
+        setInterval(() => {
             document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
             current = (current % 5) + 1;
             document.querySelectorAll(`.img${current}`).forEach(el => el.classList.add('active'));
-        }
-        setInterval(cycle, 3000);
+        }, 3000);
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
@@ -74,7 +83,14 @@
         function showFinal() {
             document.getElementById('container').style.display = 'none';
             document.getElementById('final-screen').style.display = 'block';
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            for(let i=0; i<30; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(heart);
+            }
         }
     </script>
 </body>
