@@ -20,16 +20,15 @@
         .p3 img { top: -150px; left: 0; }
         .p4 img { top: -150px; left: -150px; }
 
-        .buttons { margin-top: 20px; position: relative; width: 300px; height: 100px; }
-        button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; position: absolute; transition: all 0.2s ease; }
-        #yesBtn { background-color: #ff4d6d; color: white; left: 20px; }
-        #noBtn { background-color: #888; color: white; right: 20px; }
+        .buttons { margin-top: 20px; display: flex; gap: 20px; justify-content: center; }
+        button { padding: 10px 25px; font-size: 16px; cursor: pointer; border: none; border-radius: 20px; font-weight: bold; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #888; color: white; }
         
         #final-screen { display: none; padding: 20px; position: relative; z-index: 10; }
         .verse { margin-top: 30px; font-style: italic; color: #555; font-size: 1.1em; }
         #timer { font-size: 1.2em; color: #d63384; font-weight: bold; margin-bottom: 10px; }
 
-        /* Heart animation */
         .heart { 
             position: absolute; top: -10%; color: #d63384; font-size: 24px; 
             animation: fall linear forwards; z-index: 1000; pointer-events: none; 
@@ -51,7 +50,7 @@
         <h1>Hey Mai Juju, movie date this Tuesday or Thursday?</h1>
         <div class="buttons">
             <button id="yesBtn" onclick="showFinal()">Yes!</button>
-            <button id="noBtn" onmouseover="moveButton()">No</button>
+            <button id="noBtn" onclick="alert('Oh no! Are you sure?')">No</button>
         </div>
     </div>
 
@@ -63,13 +62,11 @@
     </div>
 
     <script>
-        // Timer calculation
         const start = new Date("2022-06-15");
         const today = new Date();
         const diffDays = Math.ceil(Math.abs(today - start) / (1000 * 60 * 60 * 24));
         document.getElementById("timer").innerText = diffDays + " days together and counting!";
 
-        // Puzzle slideshow
         let current = 1;
         setInterval(() => {
             document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
@@ -77,15 +74,6 @@
             document.querySelectorAll(`.img${current}`).forEach(el => el.classList.add('active'));
         }, 3000);
 
-        // Dodging button
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-        }
-
-        // Final screen with hearts
         function showFinal() {
             document.getElementById('container').style.display = 'none';
             document.getElementById('final-screen').style.display = 'block';
