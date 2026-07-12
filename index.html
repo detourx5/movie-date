@@ -8,14 +8,19 @@
     <style>
         body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
         
-        .puzzle-container { 
-            position: relative; width: 300px; height: 300px; margin-bottom: 20px;
-            clip-path: polygon(0% 20%, 30% 20%, 30% 0%, 70% 0%, 70% 20%, 100% 20%, 100% 100%, 0% 100%);
-            background-color: #d63384;
+        /* Puzzle Grid Container */
+        .puzzle-grid { 
+            display: grid; grid-template-columns: 150px 150px; grid-template-rows: 150px 150px; 
+            gap: 2px; margin-bottom: 20px; border: 5px solid #d63384; border-radius: 15px;
         }
+        .piece { width: 150px; height: 150px; overflow: hidden; position: relative; background: #ffcad4; }
+        .piece img { width: 300px; height: 300px; object-fit: cover; position: absolute; opacity: 0; transition: opacity 1s; }
+        .piece img.active { opacity: 1; }
         
-        .slide { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
-        .slide.active { opacity: 1; }
+        .p1 img { top: 0; left: 0; }
+        .p2 img { top: 0; left: -150px; }
+        .p3 img { top: -150px; left: 0; }
+        .p4 img { top: -150px; left: -150px; }
 
         .buttons { margin-top: 30px; position: relative; width: 300px; height: 100px; }
         button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; position: absolute; transition: all 0.2s ease; }
@@ -23,18 +28,17 @@
         #noBtn { background-color: #888; color: white; right: 20px; }
         
         #final-screen { display: none; padding: 20px; }
-        .verse { margin-top: 50px; font-style: italic; color: #555; font-size: 0.9em; }
+        .verse { margin-top: 50px; font-style: italic; color: #555; font-size: 1.1em; }
     </style>
 </head>
 <body>
 
     <div id="container">
-        <div class="puzzle-container">
-            <img src="photo1.jpg" class="slide active">
-            <img src="photo2.jpg" class="slide">
-            <img src="photo3.jpg" class="slide">
-            <img src="photo4.jpg" class="slide">
-            <img src="photo5.jpg" class="slide">
+        <div class="puzzle-grid">
+            <div class="piece p1"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p2"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p3"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p4"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
         </div>
         
         <h1>Hey Mai Juju, movie date this Tuesday or Thursday?</h1>
@@ -52,13 +56,13 @@
     </div>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 3000);
+        let current = 1;
+        function cycle() {
+            document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+            current = (current % 5) + 1;
+            document.querySelectorAll(`.img${current}`).forEach(el => el.classList.add('active'));
+        }
+        setInterval(cycle, 3000);
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
