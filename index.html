@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For my Mai Juju</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f5; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
+        
+        /* Puzzle Grid Container */
+        .puzzle-grid { 
+            display: grid; grid-template-columns: 150px 150px; grid-template-rows: 150px 150px; 
+            gap: 2px; margin-bottom: 20px; border: 5px solid #d63384; border-radius: 15px;
+        }
+        .piece { width: 150px; height: 150px; overflow: hidden; position: relative; background: #ffcad4; }
+        .piece img { width: 300px; height: 300px; object-fit: cover; position: absolute; opacity: 0; transition: opacity 1s; }
+        .piece img.active { opacity: 1; }
+        
+        .p1 img { top: 0; left: 0; }
+        .p2 img { top: 0; left: -150px; }
+        .p3 img { top: -150px; left: 0; }
+        .p4 img { top: -150px; left: -150px; }
+
+        .buttons { margin-top: 30px; position: relative; width: 300px; height: 100px; }
+        button { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 25px; font-weight: bold; position: absolute; transition: all 0.2s ease; }
+        #yesBtn { background-color: #ff4d6d; color: white; left: 20px; }
+        #noBtn { background-color: #888; color: white; right: 20px; }
+        
+        #final-screen { display: none; padding: 20px; }
+        .verse { margin-top: 50px; font-style: italic; color: #555; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div class="puzzle-grid">
+            <div class="piece p1"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p2"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p3"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+            <div class="piece p4"><img src="photo1.jpg" class="img1 active"><img src="photo2.jpg" class="img2"><img src="photo3.jpg" class="img3"><img src="photo4.jpg" class="img4"><img src="photo5.jpg" class="img5"></div>
+        </div>
+        
+        <h1>Hey Mai Juju, movie date this Tuesday or Thursday?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="showFinal()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="final-screen" class="animate__animated animate__zoomIn">
+        <h2 style="color: #d63384;">Ndokuda nemoyo wese mukadzi wamhofu ❤️</h2>
+        <div class="verse">
+            <p>"Many women do noble things, but you surpass them all." – Proverbs 31:29</p>
+        </div>
+    </div>
+
+    <script>
+        let current = 1;
+        function cycle() {
+            document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+            current = (current % 5) + 1;
+            document.querySelectorAll(`.img${current}`).forEach(el => el.classList.add('active'));
+        }
+        setInterval(cycle, 3000);
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+        }
+
+        function showFinal() {
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('final-screen').style.display = 'block';
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        }
+    </script>
+</body>
+</html>
